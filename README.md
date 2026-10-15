@@ -57,26 +57,43 @@ taskflow/
 
 ## Uruchomienie
 
+### Docker
+
+Wymagany jest Docker Desktop z Docker Compose. W katalogu głównym projektu skopiuj
+plik przykładowej konfiguracji i ustaw własne sekrety:
+
+```powershell
+Copy-Item .env.example .env
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
+
+Wygenerowany klucz wstaw jako `DJANGO_SECRET_KEY` w `.env`. Zmień również
+`POSTGRES_PASSWORD`, a następnie uruchom całą aplikację:
+
+```powershell
+docker compose up --build
+```
+
+Aplikacja będzie dostępna pod adresem `http://localhost:8080`. Compose uruchamia
+Django/Gunicorn, PostgreSQL i Nginx; frontend React buduje się w trakcie budowy
+obrazu. Migracje i zbieranie plików statycznych wykonują się przy starcie
+kontenera aplikacji. Baza danych i zdjęcia profilowe są zachowywane w wolumenach
+Docker.
+
+Aby zatrzymać kontenery, użyj `docker compose down`. Dane pozostaną zachowane;
+`docker compose down -v` usuwa również wolumeny z bazą i zdjęciami.
+
+Konfigurację zewnętrznej poczty można ustawić przez `TASKFLOW_EMAIL_USER` oraz
+`TASKFLOW_EMAIL_PASSWORD` w `.env`. Puste wartości oznaczają tryb konsolowy.
+
 ### 1. Backend
 
 ```bash
-pip install -r requirements.txt   # Django, psycopg itd.
+pip install -r requirements.txt
 ```
 
-Baza jest skonfigurowana w `config/settings.py` (PostgreSQL, baza `taskFlow`):
-
-```python
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'taskFlow',
-        'USER': 'postgres',
-        'PASSWORD': '...',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-}
-```
+Bazę PostgreSQL konfiguruje się zmiennymi środowiskowymi `POSTGRES_DB`,
+`POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_HOST` i `POSTGRES_PORT`.
 
 Migracje i serwer:
 
@@ -100,7 +117,7 @@ Do pracy na żywo: `npm run dev` (Vite na porcie 5173 z proxy na Django 8000).
 
 ### 3. E-maile (tryb dev)
 
-Dopóki `TASKFLOW_EMAIL_USER` i `TASKFLOW_EMAIL_PASSWORD` w `settings.py` są puste,
+Dopóki zmienne `TASKFLOW_EMAIL_USER` i `TASKFLOW_EMAIL_PASSWORD` są puste,
 kody weryfikacyjne **nie są wysyłane mailem** — pojawiają się w konsoli `runserver`.
 Aby włączyć realne wysyłanie (Gmail), wpisz adres i tzw. hasło aplikacji
 (konto Google → Bezpieczeństwo → Weryfikacja dwuetapowa → Hasła aplikacji).

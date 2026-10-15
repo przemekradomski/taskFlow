@@ -10,15 +10,31 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-e%i59zm87ztx$$_0#%0-zee)=#pcbt3x7k#y8-_n)m3!k*sl@0'
+SECRET_KEY = os.environ.get(
+    "DJANGO_SECRET_KEY",
+    "django-insecure-local-development-only",
+)
 
-DEBUG = True
+DEBUG = os.environ.get("DJANGO_DEBUG", "1").lower() in {"1", "true", "yes"}
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.100.32']
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.environ.get(
+        "DJANGO_ALLOWED_HOSTS",
+        "127.0.0.1,localhost,192.168.100.32",
+    ).split(",")
+    if host.strip()
+]
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
+    if origin.strip()
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -63,11 +79,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'taskFlow',
-        'USER' : 'postgres',
-        'PASSWORD' : '1234',
-        'HOST' : '127.0.0.1',
-        'PORT' : '5432'
+        'NAME': os.environ.get("POSTGRES_DB", "taskFlow"),
+        'USER': os.environ.get("POSTGRES_USER", "postgres"),
+        'PASSWORD': os.environ.get("POSTGRES_PASSWORD", "1234"),
+        'HOST': os.environ.get("POSTGRES_HOST", "127.0.0.1"),
+        'PORT': os.environ.get("POSTGRES_PORT", "5432"),
     }
 }
 
@@ -107,14 +123,15 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_FROM_EMAIL = 'taskflow@localhost'
 
-TASKFLOW_EMAIL_USER = ''
-TASKFLOW_EMAIL_PASSWORD = ''
+TASKFLOW_EMAIL_USER = os.environ.get("TASKFLOW_EMAIL_USER", "")
+TASKFLOW_EMAIL_PASSWORD = os.environ.get("TASKFLOW_EMAIL_PASSWORD", "")
 
 if TASKFLOW_EMAIL_USER and TASKFLOW_EMAIL_PASSWORD:
     MAILERS = {

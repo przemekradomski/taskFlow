@@ -1,0 +1,17 @@
+{% load static %}<!DOCTYPE html>
+<html lang="pl" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Flow</title>
+    {% for style in spa_styles %}
+        <link rel="stylesheet" href="{{ style }}">
+    {% endfor %}
+</head>
+<body>
+    <div id="root"></div>
+    {% for script in spa_scripts %}
+        <script type="module" src="{{ script }}"></script>
+    {% endfor %}
+</body>
+</html>

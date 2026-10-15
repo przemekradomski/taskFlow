@@ -1,0 +1,72 @@
+import { createRoot } from "react-dom/client";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles.css";
+import { AuthProvider, useAuth } from "./auth.jsx";
+import Navbar from "./components/Navbar.jsx";
+import RequireAuth from "./components/RequireAuth.jsx";
+import Login from "./pages/Login.jsx";
+import FirstLogin from "./pages/FirstLogin.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import Profile from "./pages/Profile.jsx";
+import Admin from "./pages/Admin.jsx";
+
+function App() {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="d-flex vh-100 align-items-center justify-content-center">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Ładowanie...</span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <BrowserRouter>
+      {user && <Navbar />}
+      <main className="container py-4">
+        <Routes>
+          <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />} />
+          <Route
+            path="/pierwsze-logowanie"
+            element={user ? <Navigate to="/" replace /> : <FirstLogin />}
+          />
+          <Route
+            path="/"
+            element={
+              <RequireAuth>
+                <Dashboard />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/profil"
+            element={
+              <RequireAuth>
+                <Profile />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/panel-admina"
+            element={
+              <RequireAuth admin>
+                <Admin />
+              </RequireAuth>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </main>
+    </BrowserRouter>
+  );
+}
+
+createRoot(document.getElementById("root")).render(
+  <AuthProvider>
+    <App />
+  </AuthProvider>
+);

@@ -1,0 +1,193 @@
+:root,
+[data-bs-theme="dark"] {
+  --bs-body-bg: #0f111a;
+  --bs-body-color: #f3f4f6;
+  --bs-primary: #8b5cf6;
+  --bs-primary-rgb: 139, 92, 246;
+  --bs-border-color: #2d3142;
+  --bs-secondary-bg: #191c29;
+  --bs-tertiary-bg: #222638;
+  --bs-link-color: #c4b5fd;
+  --bs-link-hover-color: #ffffff;
+  --bs-danger: #f87171;
+  --bs-success: #34d399;
+}
+
+body {
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.5px;
+}
+
+.app-navbar {
+  background: #191c29;
+}
+
+.app-navbar .nav-link {
+  color: #9ca3af;
+  border-radius: 8px;
+  padding: 0.35rem 0.85rem;
+}
+
+.app-navbar .nav-link:hover,
+.app-navbar .nav-link.active {
+  color: #f3f4f6;
+  background: #222638;
+}
+
+.brand-accent {
+  color: #8b5cf6;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-fallback {
+  background: #8b5cf6;
+  color: #fff;
+  font-weight: 700;
+}
+
+.avatar-big {
+  width: 72px;
+  height: 72px;
+  font-size: 1.75rem;
+}
+
+.nav-profile {
+  display: inline-flex;
+  line-height: 1;
+}
+
+.card {
+  background: #191c29;
+  border: 1px solid #2d3142;
+  border-radius: 16px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.stat-card {
+  padding: 20px;
+  min-height: 100%;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  border-color: #8b5cf6;
+}
+
+.stat-card-total {
+  border-radius: 12px;
+  background: #222638;
+  min-width: 150px;
+}
+
+.auth-card {
+  margin-top: 6vh;
+}
+
+.app-modal {
+  background: #191c29;
+  border: 1px solid #2d3142;
+  border-radius: 16px;
+}
+
+.eyebrow {
+  color: #8b5cf6;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.task-item {
+  background: #222638;
+  border: 1px solid #2d3142;
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.task-item-title {
+  overflow-wrap: anywhere;
+}
+
+.task-item-desc {
+  color: #9ca3af;
+  margin: 6px 0 4px;
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.btn-primary {
+  --bs-btn-bg: #8b5cf6;
+  --bs-btn-border-color: #8b5cf6;
+  --bs-btn-hover-bg: #7c3aed;
+  --bs-btn-hover-border-color: #7c3aed;
+  --bs-btn-active-bg: #7c3aed;
+  --bs-btn-active-border-color: #7c3aed;
+  --bs-btn-disabled-bg: #8b5cf6;
+  --bs-btn-disabled-border-color: #8b5cf6;
+  --bs-btn-color: #fff;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-active-color: #fff;
+  font-weight: 600;
+}
+
+.btn-outline-secondary {
+  --bs-btn-color: #9ca3af;
+  --bs-btn-border-color: #2d3142;
+  --bs-btn-hover-bg: #222638;
+  --bs-btn-hover-border-color: #2d3142;
+  --bs-btn-hover-color: #f3f4f6;
+}
+
+.form-control,
+.form-select {
+  background-color: #222638;
+  border-color: #2d3142;
+  color: #f3f4f6;
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: #222638;
+  border-color: #8b5cf6;
+  color: #f3f4f6;
+  box-shadow: 0 0 0 0.2rem rgba(139, 92, 246, 0.25);
+}
+
+.form-control::placeholder {
+  color: #6b7280;
+}
+
+.btn-icon-ghost {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  padding: 0 4px;
+  line-height: 1;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.btn-icon-ghost:hover {
+  color: #8b5cf6;
+}
+
+.table-dark {
+  --bs-table-bg: transparent;
+  --bs-table-border-color: #2d3142;
+}

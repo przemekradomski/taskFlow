@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+venv/
+.venv/
+
+# Django
+db.sqlite3
+media/
+static/spa/
+
+# Node / frontend
+frontend/node_modules/
+frontend/dist/
+
+# Srodowisko i IDE
+.env
+.idea/
+.vscode/
+*.log
+
+# System
+Thumbs.db
+.DS_Store

@@ -68,7 +68,6 @@ def _serialize_user(user, avatar=None):
     }
 
 def _generate_code():
-    """6-cyfrowy kod weryfikacyjny (kryptograficznie losowy)."""
     return "".join(secrets.choice("0123456789") for _ in range(6))
 
 def _send_verification_code(user, code):

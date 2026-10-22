@@ -1,3 +1,4 @@
 Django==6.1.2
 gunicorn==23.0.0
 psycopg[binary]==3.3.6
+django-pwa==2.0.1

@@ -1,12 +1,15 @@
 import json
 
 from django.contrib.auth.models import User
+from django.conf import settings
 from django.core import mail
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import Client, TestCase
+from django.test import Client, SimpleTestCase, TestCase
 from django.utils import timezone
 
 from taskFlow.models import Issue, Profile
+
+print(timezone.now())
 
 def _request_json(client, method, url, payload):
     return client.generic(
@@ -21,6 +24,26 @@ def post_json(client, url, payload):
 
 def put_json(client, url, payload):
     return _request_json(client, "PUT", url, payload)
+
+
+class PwaInstallabilityTests(SimpleTestCase):
+    def test_pwa_manifest_is_served_as_json_with_existing_icons(self):
+        response = Client().get("/manifest.json")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Content-Type"].split(";")[0], "application/json")
+        manifest = response.json()
+        self.assertEqual(manifest["start_url"], "/")
+        self.assertEqual(manifest["display"], "standalone")
+        for icon in manifest["icons"]:
+            icon_path = icon["src"].removeprefix("/static/")
+            self.assertTrue((settings.BASE_DIR / "static" / icon_path).is_file())
+
+    def test_service_worker_is_served_as_javascript(self):
+        response = Client().get("/serviceworker.js")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("javascript", response["Content-Type"])
+        self.assertContains(response, 'addEventListener("fetch"')
+
 
 class TaskFlowBackendTests(TestCase):
     def setUp(self):
@@ -367,6 +390,7 @@ class TaskFlowBackendTests(TestCase):
             response = client.get(url)
             self.assertEqual(response.status_code, 200, url)
             self.assertContains(response, '<div id="root"></div>')
+            self.assertContains(response, 'rel="manifest" href="/manifest.json"')
 
     def _extract_code(self):
         for line in mail.outbox[0].body.splitlines():

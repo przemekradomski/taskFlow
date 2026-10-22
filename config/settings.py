@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'taskFlow'
+    'taskFlow',
+    'pwa'
 ]
 
 MIDDLEWARE = [
@@ -110,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'pl-pl'
+LANGUAGE_CODE = 'pl'
 
 TIME_ZONE = 'Europe/Warsaw'
 
@@ -121,7 +122,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static'
+    BASE_DIR / 'static',
+    os.path.join(BASE_DIR, 'static')
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
@@ -152,3 +154,37 @@ else:
             'BACKEND': 'django.core.mail.backends.console.EmailBackend',
         },
     }
+
+PWA_APP_NAME = 'Task Flow'
+PWA_APP_DESCRIPTION = "Aplikacja do zarządzania projektami"
+PWA_APP_THEME_COLOR = '#0A0302'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'any'
+PWA_APP_START_URL = '/'
+PWA_APP_STATUS_BAR_COLOR = 'default'
+PWA_APP_ICONS = [
+    {
+        'src': '/static/images/icons/icon-192x192.png',
+        'sizes': '192x192',
+        'type': 'image/png',
+        'purpose': 'any maskable',
+    },
+    {
+        'src': '/static/images/icons/icon-512x512.png',
+        'sizes': '512x512',
+        'type': 'image/png',
+        'purpose': 'any maskable',
+    },
+]
+PWA_APP_ICONS_APPLE = [
+    {
+        'src': '/static/images/icons/icon-192x192.png',
+        'sizes': '192x192',
+    },
+]
+PWA_SERVICE_WORKER_PATH = BASE_DIR / 'taskFlow' / 'serviceworker.js'
+PWA_APP_DIR = 'ltr'
+PWA_APP_LANG = 'pl'
+PWA_APP_SHORTCUTS = []

@@ -11,6 +11,12 @@ import Dashboard from "./pages/Dashboard.jsx";
 import Profile from "./pages/Profile.jsx";
 import Admin from "./pages/Admin.jsx";
 
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/serviceworker.js").catch((error) => {
+    console.error("Nie udało się zarejestrować service workera:", error);
+  });
+}
+
 function App() {
   const { user, loading } = useAuth();
 

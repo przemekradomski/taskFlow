@@ -63,7 +63,7 @@ class AccountVerification(models.Model):
         return f"Weryfikacja: {self.user.username}"
 
 class Profile(models.Model):
-    """Dodatkowe dane użytkownika - zdjęcie profilowe (awatar)."""
+
 
     ALLOWED_AVATAR_EXTENSIONS = {"jpg", "jpeg", "png", "gif", "webp"}
 

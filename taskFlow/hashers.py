@@ -5,13 +5,6 @@ from django.contrib.auth.hashers import BasePasswordHasher
 from django.utils.crypto import constant_time_compare, get_random_string
 
 class SHA512PasswordHasher(BasePasswordHasher):
-    """Hashowanie haseł metodą SHA-512 (solone).
-
-    Format zapisu w bazie: ``sha512$<salt>$<digest>``
-    Hasher jest zarejestrowany w settings.PASSWORD_HASHERS, dzięki czemu
-    Django (set_password / check_password / authenticate) używa go
-    automatycznie i w całym projekcie nie ma żadnych surowych zapytań SQL.
-    """
 
     algorithm = "sha512"
 

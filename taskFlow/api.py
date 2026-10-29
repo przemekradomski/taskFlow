@@ -1,9 +1,3 @@
-"""JSON API dla aplikacji React (SPA).
-
-Wszystkie endpointy zwracają JSON i korzystają z sesyjnego
-uwierzytelniania Django + tokena CSRF (nagłówek X-CSRFToken).
-"""
-
 import json
 import secrets
 
@@ -23,7 +17,6 @@ from taskFlow.forms import FirstLoginForm, LoginForm, TaskForm, TaskUpdateForm
 from taskFlow.models import AccountVerification, Issue, Profile
 
 def _json_body(request):
-    """Dane żądania jako dict - JSON lub formularz (multipart/urlencoded)."""
     if request.content_type and "json" in request.content_type:
         try:
             data = json.loads(request.body or "{}")
@@ -89,10 +82,6 @@ def _email_configured():
     return bool(getattr(settings, "TASKFLOW_EMAIL_USER", ""))
 
 def _create_account_with_code(username, email):
-    """Tworzy nieaktywne konto i wysyła kod weryfikacyjny.
-
-    Zwraca (status_http, payload_json) gotowe do odesłania adminowi.
-    """
     existing = User.objects.filter(username__iexact=username).first()
     if existing is not None:
         if existing.is_active:
@@ -267,7 +256,6 @@ def tasks(request):
     return JsonResponse(_serialize_issue(issue), status=201)
 
 def _get_task_for_user(request, issue_id):
-    """Zwraca (issue, response_błędu) - response_błędu None, gdy OK."""
     issue = Issue.objects.filter(pk=issue_id).first()
     if issue is None:
         return None, _error(404, "Nie znaleziono zadania.")
@@ -276,11 +264,7 @@ def _get_task_for_user(request, issue_id):
     return issue, None
 
 def _update_issue(request, issue):
-    """Edycja zadania.
 
-    Aktualizowane są tylko pola obecne w żądaniu (title, description,
-    priority, status).
-    """
     data = _json_body(request)
     data.setdefault("title", issue.title)
     data.setdefault("description", issue.description)
@@ -300,7 +284,6 @@ def _update_issue(request, issue):
 
 @require_http_methods(["DELETE", "PUT", "PATCH"])
 def task_detail(request, issue_id):
-    """Modyfikacja/usuwanie zadania - tylko autor lub superużytkownik."""
     if not request.user.is_authenticated:
         return _unauthorized()
 
@@ -353,10 +336,6 @@ def admin_users(request):
 
 @require_http_methods(["DELETE"])
 def admin_user_delete(request, user_id):
-    """Usuwanie użytkownika.
-
-    Nie można usunąć samego siebie ani innego superużytkownika.
-    """
     denied = _require_superuser(request)
     if denied:
         return denied

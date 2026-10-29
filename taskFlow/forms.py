@@ -8,7 +8,6 @@ class LoginForm(forms.Form):
     password = forms.CharField(label="Hasło", widget=forms.PasswordInput)
 
 class FirstLoginForm(forms.Form):
-    """Pierwsze logowanie: kod weryfikacyjny z maila + nowe hasło."""
 
     username = forms.CharField(label="Nazwa użytkownika", max_length=150)
     code = forms.CharField(label="Kod weryfikacyjny", max_length=12)
@@ -33,7 +32,6 @@ class FirstLoginForm(forms.Form):
         return cleaned
 
 class AdminCreateUserForm(forms.Form):
-    """Formularz administratora do tworzenia kont (username + email)."""
 
     username = forms.CharField(label="Nazwa użytkownika", max_length=150)
     email = forms.EmailField(label="Adres e-mail")
@@ -56,7 +54,6 @@ class TaskForm(forms.Form):
         return self.cleaned_data["title"].strip()
 
 class TaskUpdateForm(TaskForm):
-    """Edycja zadania - dodatkowo umożliwia zmianę statusu."""
 
     status = forms.CharField(label="Status", required=False)
 

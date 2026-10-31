@@ -1,4 +1,5 @@
 import { createRoot } from "react-dom/client";
+import { useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
@@ -20,6 +21,7 @@ if ("serviceWorker" in navigator) {
 
 function App() {
   const { user, loading } = useAuth();
+  const [selectedFilter, setSelectedFilter] = useState("all");
 
   if (loading) {
     return (
@@ -36,7 +38,12 @@ function App() {
       <div className="app-shell">
         {user && <Navbar />}
         <div className="app-content">
-          {user && <SideBar />}
+          {user && (
+            <SideBar
+              selectedFilter={selectedFilter}
+              onFilterChange={setSelectedFilter}
+            />
+          )}
           <main className="app-main">
             <Routes>
               <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />} />
@@ -48,7 +55,7 @@ function App() {
                 path="/"
                 element={
                   <RequireAuth>
-                    <Dashboard />
+                    <Dashboard selectedFilter={selectedFilter} />
                   </RequireAuth>
                 }
               />

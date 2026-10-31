@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { apiFetch, formatDate, PRIORITY_LABELS, STATUS_LABELS, STATUS_ORDER } from "../api.js";
+import { apiFetch, STATUS_LABELS, STATUS_ORDER } from "../api.js";
 import TaskFormModal from "../components/TaskFormModal.jsx";
 import TaskItem from "../components/TaskItem.jsx";
 
@@ -9,14 +9,13 @@ const COUNT_FIELDS = {
   Done: "done",
 };
 
-export default function Dashboard() {
+export default function Dashboard({ selectedFilter }) {
   const [tasks, setTasks] = useState([]);
   const [counts, setCounts] = useState({ to_do: 0, in_progress: 0, done: 0, total: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
-
   const loadTasks = useCallback(async () => {
     try {
       const data = await apiFetch("/api/tasks/");
@@ -43,6 +42,17 @@ export default function Dashboard() {
       setError(err.message);
     }
   };
+
+  const filteredTasks =
+    selectedFilter === "all"
+      ? tasks
+      : selectedFilter === "urgent"
+        ? tasks.filter((task) => task.priority?.toLowerCase() === "urgent")
+        : selectedFilter === "created_at"
+          ? [...tasks].sort(
+              (a, b) => new Date(b.created_at) - new Date(a.created_at)
+            )
+          : tasks;
 
   return (
     <>
@@ -83,14 +93,16 @@ export default function Dashboard() {
       ) : (
         <div className="row g-3">
           {STATUS_ORDER.map((status) => {
-            const groupTasks = tasks.filter((task) => task.status === status);
+            const groupTasks = filteredTasks.filter((task) => task.status === status);
             return (
               <div className="col-12 col-lg-4" key={status}>
                 <div className="card stat-card h-100">
                   <div className="d-flex justify-content-between align-items-center mb-3">
                     <span className="fw-semibold">{STATUS_LABELS[status]}</span>
                     <span className="badge text-bg-primary rounded-pill">
-                      {counts[COUNT_FIELDS[status]] ?? groupTasks.length}
+                      {selectedFilter === "all"
+                        ? counts[COUNT_FIELDS[status]] ?? groupTasks.length
+                        : groupTasks.length}
                     </span>
                   </div>
                   <div className="d-flex flex-column gap-2">

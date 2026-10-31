@@ -66,15 +66,26 @@ h3 {
   color: #f3f4f6;
 }
 
-.sidebar span {
+.sidebar-filter {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   padding: 0.5rem 0.75rem;
   border-radius: 8px;
+  cursor: pointer;
 }
 
-.sidebar span:first-child {
-  background: #222638;
+.sidebar-filter:hover,
+.sidebar-filter[aria-pressed="true"] {
   color: #c4b5fd;
   font-weight: 600;
+}
+
+.sidebar-filter:focus-visible {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
 }
 
 @media (max-width: 767.98px) {

@@ -18,6 +18,23 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.app-content {
+  display: flex;
+  flex: 1;
+}
+
+.app-main {
+  flex: 1;
+  min-width: 0;
+  padding: 1.5rem;
+}
+
 h1,
 h2,
 h3 {
@@ -38,6 +55,36 @@ h3 {
 .app-navbar .nav-link.active {
   color: #f3f4f6;
   background: #222638;
+}
+
+.sidebar {
+  flex: 0 0 250px;
+  min-height: 100%;
+  background: #191c29;
+  border: 1px solid #2d3142;
+  border-radius: 16px;
+  color: #f3f4f6;
+}
+
+.sidebar span {
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+}
+
+.sidebar span:first-child {
+  background: #222638;
+  color: #c4b5fd;
+  font-weight: 600;
+}
+
+@media (max-width: 767.98px) {
+  .sidebar {
+    flex-basis: 200px;
+  }
+
+  .app-main {
+    padding: 1rem;
+  }
 }
 
 .brand-accent {

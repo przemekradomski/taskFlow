@@ -10,6 +10,7 @@ import FirstLogin from "./pages/FirstLogin.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Profile from "./pages/Profile.jsx";
 import Admin from "./pages/Admin.jsx";
+import SideBar from "./components/sideBar.jsx";
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("/serviceworker.js").catch((error) => {
@@ -32,41 +33,46 @@ function App() {
 
   return (
     <BrowserRouter>
-      {user && <Navbar />}
-      <main className="container py-4">
-        <Routes>
-          <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />} />
-          <Route
-            path="/pierwsze-logowanie"
-            element={user ? <Navigate to="/" replace /> : <FirstLogin />}
-          />
-          <Route
-            path="/"
-            element={
-              <RequireAuth>
-                <Dashboard />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/profil"
-            element={
-              <RequireAuth>
-                <Profile />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/panel-admina"
-            element={
-              <RequireAuth admin>
-                <Admin />
-              </RequireAuth>
-            }
-          />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </main>
+      <div className="app-shell">
+        {user && <Navbar />}
+        <div className="app-content">
+          {user && <SideBar />}
+          <main className="app-main">
+            <Routes>
+              <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />} />
+              <Route
+                path="/pierwsze-logowanie"
+                element={user ? <Navigate to="/" replace /> : <FirstLogin />}
+              />
+              <Route
+                path="/"
+                element={
+                  <RequireAuth>
+                    <Dashboard />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/profil"
+                element={
+                  <RequireAuth>
+                    <Profile />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/panel-admina"
+                element={
+                  <RequireAuth admin>
+                    <Admin />
+                  </RequireAuth>
+                }
+              />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </main>
+        </div>
+      </div>
     </BrowserRouter>
   );
 }

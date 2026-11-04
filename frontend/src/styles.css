@@ -1,12 +1,12 @@
 :root,
-[data-bs-theme="dark"] {
-  --bs-body-bg: #0f111a;
-  --bs-body-color: #f3f4f6;
+[data-bs-theme="light"] {
+  --bs-body-bg: #ffffff;
+  --bs-body-color: #0f111a;
   --bs-primary: #8b5cf6;
   --bs-primary-rgb: 139, 92, 246;
-  --bs-border-color: #2d3142;
-  --bs-secondary-bg: #191c29;
-  --bs-tertiary-bg: #222638;
+  --bs-border-color: #f3f4f6;
+  --bs-secondary-bg: #fffafa;
+  --bs-tertiary-bg: #f3f4f6;
   --bs-link-color: #c4b5fd;
   --bs-link-hover-color: #ffffff;
   --bs-danger: #f87171;
@@ -42,28 +42,28 @@ h3 {
 }
 
 .app-navbar {
-  background: #191c29;
+  background: #f3f4f6;
 }
 
 .app-navbar .nav-link {
-  color: #9ca3af;
+  color: #0f111a;
   border-radius: 8px;
   padding: 0.35rem 0.85rem;
 }
 
 .app-navbar .nav-link:hover,
 .app-navbar .nav-link.active {
-  color: #f3f4f6;
-  background: #222638;
+  color: #0f111a;
+  background: #f3f4f6;
 }
 
 .sidebar {
   flex: 0 0 250px;
   min-height: 100%;
-  background: #191c29;
-  border: 1px solid #2d3142;
+  background: #fffafa;
+  border: 1px solid #f3f4f6;
   border-radius: 16px;
-  color: #f3f4f6;
+  color: #0f111a;
 }
 
 .sidebar-filter {
@@ -130,8 +130,8 @@ h3 {
 }
 
 .card {
-  background: #191c29;
-  border: 1px solid #2d3142;
+  background: #ffffff;
+  border: 1px solid #f3f4f6;
   border-radius: 16px;
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
@@ -148,7 +148,7 @@ h3 {
 
 .stat-card-total {
   border-radius: 12px;
-  background: #222638;
+  background: #fffafa;
   min-width: 150px;
 }
 
@@ -157,8 +157,8 @@ h3 {
 }
 
 .app-modal {
-  background: #191c29;
-  border: 1px solid #2d3142;
+  background: #fffafa;
+  border: 1px solid #f3f4f6;
   border-radius: 16px;
 }
 
@@ -171,7 +171,7 @@ h3 {
 }
 
 .task-item {
-  background: #222638;
+  background: #fffafa;
   border: 1px solid #2d3142;
   border-radius: 10px;
   padding: 12px 14px;
@@ -182,7 +182,7 @@ h3 {
 }
 
 .task-item-desc {
-  color: #9ca3af;
+  color: #0f111a;
   margin: 6px 0 4px;
   font-size: 0.9rem;
   overflow-wrap: anywhere;
@@ -213,27 +213,27 @@ h3 {
 
 .form-control,
 .form-select {
-  background-color: #222638;
+  background-color: #fffafa;
   border-color: #2d3142;
-  color: #f3f4f6;
+  color: #0f111a;
 }
 
 .form-control:focus,
 .form-select:focus {
-  background-color: #222638;
+  background-color: #fffafa;
   border-color: #8b5cf6;
-  color: #f3f4f6;
+  color: #0f111a;
   box-shadow: 0 0 0 0.2rem rgba(139, 92, 246, 0.25);
 }
 
 .form-control::placeholder {
-  color: #6b7280;
+  color: #0f111a;
 }
 
 .btn-icon-ghost {
   background: none;
   border: none;
-  color: #9ca3af;
+  color: #0f111a;
   padding: 0 4px;
   line-height: 1;
   font-size: 0.95rem;
@@ -247,5 +247,5 @@ h3 {
 
 .table-dark {
   --bs-table-bg: transparent;
-  --bs-table-border-color: #2d3142;
+  --bs-table-border-color: #f3f4f6;
 }

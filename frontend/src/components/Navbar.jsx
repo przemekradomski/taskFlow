@@ -11,11 +11,11 @@ export default function Navbar() {
     navigate("/login");
   };
 
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() =>  document.documentElement.getAttribute("data-bs-theme") === "dark");
 
   useEffect(() =>{
     document.documentElement.setAttribute(
-      "data-theme",
+      "data-bs-theme",
       darkMode ? "dark" : "light"
     );
   }, [darkMode]);

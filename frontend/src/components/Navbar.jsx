@@ -1,5 +1,6 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth.jsx";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -9,6 +10,15 @@ export default function Navbar() {
     await logout();
     navigate("/login");
   };
+
+  const [darkMode, setDarkMode] = useState(() =>  document.documentElement.getAttribute("data-bs-theme") === "dark");
+
+  useEffect(() =>{
+    document.documentElement.setAttribute(
+      "data-bs-theme",
+      darkMode ? "dark" : "light"
+    );
+  }, [darkMode]);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark border-bottom app-navbar">
@@ -45,6 +55,12 @@ export default function Navbar() {
             Wyloguj
           </button>
         </div>
+          <button
+            type="button"
+            className="btn btn-sm btn-outline-secondary ms-2"
+            onClick={() => setDarkMode(!darkMode)}>
+              {darkMode ? "Jasny ☀️" : "Ciemny 🌙"}
+        </button>
       </div>
     </nav>
   );
